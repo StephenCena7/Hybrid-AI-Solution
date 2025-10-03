@@ -1,0 +1,63 @@
+# =====================
+# Backend (Python/Django)
+# =====================
+
+# Virtual environment
+backend/venv/
+
+# Python bytecode
+backend/__pycache__/
+backend/**/*.py[cod]
+backend/*.pyc
+
+# Django database
+backend/db.sqlite3
+
+# Django migrations (optional: you can track them if you want)
+backend/api/migrations/__pycache__/
+backend/api/migrations/*.py[cod]
+
+# =====================
+# Frontend (Next.js/Node.js)
+# =====================
+
+# Node modules
+frontend/node_modules/
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# Local env files
+frontend/.env
+frontend/.env.local
+frontend/.env.development
+frontend/.env.production
+frontend/.env.test
+
+# npm logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Optional: package-lock or yarn lock if you want to ignore
+frontend/package-lock.json
+frontend/yarn.lock
+
+# =====================
+# VS Code / Editors / OS
+# =====================
+
+# VS Code settings
+.vscode/
+
+# Mac / Windows
+.DS_Store
+Thumbs.db
+
+# =====================
+# Optional / Misc
+# =====================
+
+# Logs
+*.log

@@ -36,15 +36,15 @@ export default function Navigation() {
           </div>
 
           <div className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`} id="navMenu">
-            <a href="#platform">Platform</a>
-            <a href="#features">Features</a>
-            <a href="#solutions">Solutions</a>
-            <a href="#pricing">Pricing</a>
+            <a href="#platform">Option1</a>
+            <a href="#features">Option2</a>
+            <a href="#solutions">Option3</a>
+            <a href="#pricing">Option4</a>
           </div>
 
           <div className="nav-actions">
             <button className="btn-signin">Sign In</button>
-            <button className="btn-primary">Get Started</button>
+            <button className="btn-primary">Contact Us</button>
           </div>
 
           <button 

@@ -1,15 +1,46 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+
 export default function AboutSection() {
+  const sectionRef = useRef(null)
+  const headerRef = useRef(null)
+  const cardsRef = useRef(null)
+  const missionRef = useRef(null)
+  const valuesRef = useRef(null)
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, observerOptions)
+
+    if (headerRef.current) observer.observe(headerRef.current)
+    if (cardsRef.current) observer.observe(cardsRef.current)
+    if (missionRef.current) observer.observe(missionRef.current)
+    if (valuesRef.current) observer.observe(valuesRef.current)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <section className="about-section" id="about">
+    <section className="about-section" ref={sectionRef} id="about">
       <div className="about-container">
         {/* Decorative Elements */}
         <div className="about-decoration about-decoration-top"></div>
         <div className="about-decoration about-decoration-bottom"></div>
 
         {/* Header */}
-        <div className="about-header">
+        <div className="about-header" ref={headerRef}>
           <h2 className="about-title">
             About{' '}
             <span className="about-gradient-text">
@@ -39,7 +70,7 @@ export default function AboutSection() {
         </div>
 
         {/* Feature Cards */}
-        <div className="about-cards-grid">
+        <div className="about-cards-grid" ref={cardsRef}>
           <div className="about-card">
             <div className="about-card-header">
               <div className="about-card-icon about-icon-cyan">
@@ -111,7 +142,7 @@ export default function AboutSection() {
         </div>
 
         {/* Mission & Vision */}
-        <div className="about-mission-vision">
+        <div className="about-mission-vision" ref={missionRef}>
           <div className="mission-vision-card mission-card">
             <div className="mission-vision-icon mission-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -142,7 +173,7 @@ export default function AboutSection() {
         </div>
 
         {/* Core Values */}
-        <div className="core-values">
+        <div className="core-values" ref={valuesRef}>
           <h3 className="core-values-title">Core Values That Drive Us</h3>
           <div className="values-grid">
             <div className="value-item">

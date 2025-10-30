@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
@@ -9,11 +10,13 @@ export default function ContactSection() {
     message: ''
   })
 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission
     console.log('Form submitted:', formData)
   }
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -22,22 +25,24 @@ export default function ContactSection() {
     })
   }
 
+
   return (
     <section className="contact-section">
       <div className="contact-container">
         {/* Header */}
         <div className="contact-header">
           <h2 className="contact-title">
-            Let's{' '}
+            Let&apos;s{' '}
             <span className="contact-gradient-text">
               Connect
             </span>
           </h2>
           <p className="contact-subtitle">
-            Let's build the future of your enterprise together. Connect with us 
+            Let&apos;s build the future of your enterprise together. Connect with us 
             to explore how Hybrid AI Solution can transform your business.
           </p>
         </div>
+
 
         {/* Contact Form */}
         <form onSubmit={handleSubmit} className="contact-form">
@@ -66,6 +71,7 @@ export default function ContactSection() {
             </div>
           </div>
 
+
           <div className="form-group">
             <input
               type="text"
@@ -76,6 +82,7 @@ export default function ContactSection() {
               className="form-input"
             />
           </div>
+
 
           <div className="form-group">
             <textarea
@@ -89,6 +96,7 @@ export default function ContactSection() {
             />
           </div>
 
+
           <button type="submit" className="form-submit-btn">
             Send Message
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -97,6 +105,7 @@ export default function ContactSection() {
             </svg>
           </button>
         </form>
+
 
         {/* Contact Info */}
         <div className="contact-info-grid">
@@ -111,6 +120,7 @@ export default function ContactSection() {
             <p>123 AI Street, Tech City, TC 12345</p>
           </div>
 
+
           <div className="contact-info-card">
             <div className="contact-info-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -121,6 +131,7 @@ export default function ContactSection() {
             <h4>Email Us</h4>
             <p>contact@hybridai.com</p>
           </div>
+
 
           <div className="contact-info-card">
             <div className="contact-info-icon">

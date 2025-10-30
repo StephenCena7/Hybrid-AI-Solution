@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
+
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
@@ -10,6 +11,7 @@ export default function Hero() {
   const [titleTransitioning, setTitleTransitioning] = useState(false)
   const [subtitleTransitioning, setSubtitleTransitioning] = useState(false)
   const [descriptionTransitioning, setDescriptionTransitioning] = useState(false)
+
 
   const textVariations = [
     {
@@ -26,12 +28,15 @@ export default function Hero() {
     }
   ]
 
+
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
+
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
@@ -39,6 +44,7 @@ export default function Hero() {
     }
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
+
 
     const particles: Array<{
       x: number
@@ -49,6 +55,7 @@ export default function Hero() {
       opacity: number
       color: string
     }> = []
+
 
     for (let i = 0; i < 80; i++) {
       particles.push({
@@ -62,8 +69,10 @@ export default function Hero() {
       })
     }
 
+
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+
 
       particles.forEach((particle, i) => {
         ctx.beginPath()
@@ -72,11 +81,13 @@ export default function Hero() {
         ctx.globalAlpha = particle.opacity
         ctx.fill()
 
+
         particles.forEach((particle2, j) => {
           if (i === j) return
           const dx = particle.x - particle2.x
           const dy = particle.y - particle2.y
           const distance = Math.sqrt(dx * dx + dy * dy)
+
 
           if (distance < 150) {
             ctx.beginPath()
@@ -89,27 +100,32 @@ export default function Hero() {
           }
         })
 
+
         particle.x += particle.speedX
         particle.y += particle.speedY
+
 
         if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1
         if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1
       })
 
+
       ctx.globalAlpha = 1
       requestAnimationFrame(animate)
     }
 
+
     animate()
+
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)
     }
   }, [])
 
+
   // SEQUENTIAL TRANSITIONS with PRECISE TIMING
   useEffect(() => {
-    const scanlineDuration = 6000
     const transitionDuration = 500
     
     // CALIBRATED TIMING (adjust these values to match your screen)
@@ -118,7 +134,8 @@ export default function Hero() {
     const subtitleTiming = 2700    // Subtitle transition
     const descriptionTiming = 3300 // Description transition
     
-    let timers: NodeJS.Timeout[] = []
+    const timers: NodeJS.Timeout[] = []
+
 
     // 1. Badge transition
     timers.push(setTimeout(() => {
@@ -126,17 +143,20 @@ export default function Hero() {
       setTimeout(() => setBadgeTransitioning(false), transitionDuration)
     }, badgeTiming))
 
+
     // 2. Title transition
     timers.push(setTimeout(() => {
       setTitleTransitioning(true)
       setTimeout(() => setTitleTransitioning(false), transitionDuration)
     }, titleTiming))
 
+
     // 3. Subtitle transition
     timers.push(setTimeout(() => {
       setSubtitleTransitioning(true)
       setTimeout(() => setSubtitleTransitioning(false), transitionDuration)
     }, subtitleTiming))
+
 
     // 4. Description transition + CHANGE TEXT
     timers.push(setTimeout(() => {
@@ -148,16 +168,20 @@ export default function Hero() {
       }, transitionDuration)
     }, descriptionTiming))
 
+
     return () => {
       timers.forEach(timer => clearTimeout(timer))
     }
   }, [currentTextIndex, textVariations.length])
 
+
   const currentText = textVariations[currentTextIndex]
+
 
   return (
     <section className="hero">
       <canvas ref={canvasRef} className="hero-canvas" />
+
 
       <div className="hero-background">
         <div className="glow-orb orb-1"></div>
@@ -166,6 +190,7 @@ export default function Hero() {
         <div className="grid-pattern"></div>
         <div className="scanline"></div>
       </div>
+
 
       <div className="hero-content">
         {/* 1. BADGE - First to transition */}
@@ -176,6 +201,7 @@ export default function Hero() {
           <span>{currentText.badge}</span>
           <div className="badge-shine"></div>
         </div>
+
 
         <div className="hero-title-container">
           <h1 className="hero-title">
@@ -190,10 +216,12 @@ export default function Hero() {
           </h1>
         </div>
 
+
         {/* 4. DESCRIPTION - Last to transition */}
         <p className={`hero-subtitle ${descriptionTransitioning ? 'subtitle-glitch' : ''}`}>
           {currentText.description}
         </p>
+
 
         <div className="hero-cta">
           <button className="btn-primary btn-large btn-enhanced btn-glitch-hover">
@@ -212,6 +240,7 @@ export default function Hero() {
           </button>
         </div>
 
+
         <div className="capability-pills">
           {['Autonomous Decision Making', 'Real-time Analytics', 'Predictive Insights', 
             'Workflow Automation', 'Natural Language Processing', 'Enterprise Integration'].map((text, i) => (
@@ -221,6 +250,7 @@ export default function Hero() {
             </span>
           ))}
         </div>
+
 
         <div className="scroll-indicator">
           <div className="scroll-mouse">

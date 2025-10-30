@@ -1,0 +1,930 @@
+/* ============================================
+   HERO SECTION - Hydro AI Solution
+   ============================================ */
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 1.5rem 4rem;
+    overflow: hidden;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(2, 6, 23, 1) 0%,
+        rgba(15, 23, 42, 1) 100%
+    );
+}
+
+/* ============================================
+   PARTICLE CANVAS
+   ============================================ */
+
+.hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ============================================
+   BACKGROUND EFFECTS
+   ============================================ */
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: orbFloatAdvanced 14s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.orb-1 {
+    width: 40rem;
+    height: 40rem;
+    top: 5%;
+    left: 5%;
+    background: radial-gradient(
+        circle,
+        rgba(34, 211, 238, 0.35) 0%,
+        rgba(34, 211, 238, 0.18) 40%,
+        transparent 70%
+    );
+}
+
+.orb-2 {
+    width: 45rem;
+    height: 45rem;
+    bottom: 5%;
+    right: 5%;
+    background: radial-gradient(
+        circle,
+        rgba(168, 85, 247, 0.35) 0%,
+        rgba(168, 85, 247, 0.18) 40%,
+        transparent 70%
+    );
+    animation-delay: -7s;
+}
+
+.orb-3 {
+    width: 35rem;
+    height: 35rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+        circle,
+        rgba(244, 114, 182, 0.25) 0%,
+        rgba(244, 114, 182, 0.12) 40%,
+        transparent 70%
+    );
+    animation-delay: -3.5s;
+}
+
+@keyframes orbFloatAdvanced {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1) translate(0, 0);
+    }
+    25% {
+        opacity: 0.8;
+        transform: scale(1.15) translate(-50px, -60px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.25) translate(40px, -50px);
+    }
+    75% {
+        opacity: 0.7;
+        transform: scale(0.95) translate(60px, 50px);
+    }
+}
+
+.grid-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(to right, rgba(30, 41, 59, 0.5) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 41, 59, 0.5) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: radial-gradient(
+        ellipse 75% 55% at 50% 50%,
+        #000 35%,
+        transparent 100%
+    );
+    animation: gridMoveAdvanced 35s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes gridMoveAdvanced {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(4rem, 4rem);
+    }
+}
+
+/* ============================================
+   SCANLINE
+   ============================================ */
+
+.scanline {
+    position: absolute;
+    top: -5%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(34, 211, 238, 0.6),
+        rgba(34, 211, 238, 1),
+        rgba(168, 85, 247, 0.8),
+        rgba(34, 211, 238, 1),
+        rgba(34, 211, 238, 0.6),
+        transparent
+    );
+    animation: scanlineMove 6s linear infinite;
+    box-shadow: 
+        0 0 30px rgba(34, 211, 238, 0.9),
+        0 0 60px rgba(34, 211, 238, 0.7),
+        0 0 90px rgba(168, 85, 247, 0.5);
+    z-index: 20;
+    filter: brightness(1.2);
+}
+
+@keyframes scanlineMove {
+    0% {
+        top: -5%;
+    }
+    100% {
+        top: 105%;
+    }
+}
+
+.scanline::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(34, 211, 238, 0.2),
+        rgba(168, 85, 247, 0.15),
+        transparent
+    );
+    filter: blur(15px);
+}
+
+.scanline::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(
+        to top,
+        transparent,
+        rgba(34, 211, 238, 0.15),
+        transparent
+    );
+    filter: blur(12px);
+}
+
+/* ============================================
+   HERO CONTENT
+   ============================================ */
+
+.hero-content {
+    position: relative;
+    max-width: 68rem;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 10;
+}
+
+/* ============================================
+   BADGE WITH GLITCH TRANSITION
+   ============================================ */
+
+.badge-enhanced {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 1.375rem;
+    background: rgba(6, 182, 212, 0.12);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    border-radius: 9999px;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: #67e8f9;
+    font-weight: 600;
+    backdrop-filter: blur(12px);
+    animation: badgePulseAdvanced 6s ease-in-out infinite;
+    box-shadow: 
+        0 4px 25px rgba(34, 211, 238, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+@keyframes badgePulseAdvanced {
+    0%, 100% {
+        background: rgba(6, 182, 212, 0.12);
+        border-color: rgba(34, 211, 238, 0.35);
+        box-shadow: 
+            0 4px 25px rgba(34, 211, 238, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    50% {
+        background: rgba(6, 182, 212, 0.22);
+        border-color: rgba(34, 211, 238, 0.55);
+        box-shadow: 
+            0 6px 35px rgba(34, 211, 238, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+}
+
+/* Badge Glitch Transition */
+.badge-glitch {
+    animation: badgeGlitchEffect 0.5s ease-in-out;
+}
+
+@keyframes badgeGlitchEffect {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    20% {
+        opacity: 0.8;
+        transform: translateX(-3px) skewX(2deg);
+        filter: hue-rotate(45deg);
+    }
+    40% {
+        opacity: 0.4;
+        transform: translateX(3px) skewX(-2deg);
+        filter: hue-rotate(180deg) brightness(1.3);
+    }
+    50% {
+        opacity: 0;
+        transform: scale(0.98);
+        filter: blur(2px);
+    }
+    60% {
+        opacity: 0.4;
+        transform: translateX(-2px);
+        filter: hue-rotate(270deg);
+    }
+    80% {
+        opacity: 0.8;
+        transform: translateX(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        filter: none;
+    }
+}
+
+.badge-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+    animation: badgeShine 4s infinite;
+}
+
+@keyframes badgeShine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.badge-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    animation: badgeIconPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes badgeIconPulse {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.15) rotate(8deg);
+    }
+}
+
+/* ============================================
+   TITLE CONTAINER
+   ============================================ */
+
+.hero-title-container {
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -1.5px;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    margin: 0;
+}
+
+.gradient-text-enhanced {
+    display: block;
+    background: linear-gradient(
+        135deg,
+        var(--cyan-400),
+        var(--purple-400),
+        var(--pink-400),
+        var(--cyan-400)
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShiftAdvanced 7s ease-in-out infinite;
+    filter: drop-shadow(0 0 35px rgba(34, 211, 238, 0.35));
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+@keyframes gradientShiftAdvanced {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.hero-subtitle-text {
+    display: block;
+    animation: fadeInUp 1s ease-out 0.3s both;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   FLIP-GLITCH TRANSITION
+   ============================================ */
+
+.text-glitch-flip {
+    animation: flipGlitchTransition 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes flipGlitchTransition {
+    0% {
+        opacity: 1;
+        transform: rotateX(0deg) translateZ(0);
+    }
+    10% {
+        opacity: 0.9;
+        transform: rotateX(10deg) translateZ(-5px) translateX(-2px);
+        filter: hue-rotate(0deg) brightness(1.2);
+    }
+    20% {
+        opacity: 0.7;
+        transform: rotateX(20deg) translateZ(-10px) translateX(2px);
+        filter: hue-rotate(90deg) brightness(1.3);
+    }
+    30% {
+        opacity: 0.5;
+        transform: rotateX(40deg) translateZ(-15px) skewX(3deg);
+        filter: hue-rotate(180deg) brightness(1.4) blur(1px);
+    }
+    40% {
+        opacity: 0.3;
+        transform: rotateX(60deg) translateZ(-20px) skewX(-3deg);
+        filter: hue-rotate(270deg) brightness(1.5) blur(2px);
+    }
+    50% {
+        opacity: 0;
+        transform: rotateX(90deg) translateZ(-25px) scale(0.95);
+        filter: brightness(2) blur(3px);
+    }
+    60% {
+        opacity: 0.3;
+        transform: rotateX(-60deg) translateZ(-20px) skewX(2deg);
+        filter: hue-rotate(180deg) brightness(1.5) blur(2px);
+    }
+    70% {
+        opacity: 0.5;
+        transform: rotateX(-40deg) translateZ(-15px) skewX(-2deg);
+        filter: hue-rotate(90deg) brightness(1.3) blur(1px);
+    }
+    80% {
+        opacity: 0.7;
+        transform: rotateX(-20deg) translateZ(-10px) translateX(1px);
+        filter: hue-rotate(45deg) brightness(1.2);
+    }
+    90% {
+        opacity: 0.9;
+        transform: rotateX(-10deg) translateZ(-5px);
+        filter: hue-rotate(0deg) brightness(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg) translateZ(0);
+        filter: drop-shadow(0 0 35px rgba(34, 211, 238, 0.35));
+    }
+}
+
+.text-glitch-flip::before,
+.text-glitch-flip::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.text-glitch-flip::before {
+    animation: glitchRGBBefore 0.5s ease-out;
+    color: rgba(34, 211, 238, 0.7);
+    z-index: -1;
+}
+
+.text-glitch-flip::after {
+    animation: glitchRGBAfter 0.5s ease-out;
+    color: rgba(244, 114, 182, 0.7);
+    z-index: -2;
+}
+
+@keyframes glitchRGBBefore {
+    0%, 100% {
+        opacity: 0;
+        transform: translate(0);
+    }
+    20%, 80% {
+        opacity: 0.8;
+    }
+    35% {
+        transform: translate(-5px, 0);
+    }
+    65% {
+        transform: translate(5px, 0);
+    }
+}
+
+@keyframes glitchRGBAfter {
+    0%, 100% {
+        opacity: 0;
+        transform: translate(0);
+    }
+    20%, 80% {
+        opacity: 0.8;
+    }
+    35% {
+        transform: translate(5px, 0);
+    }
+    65% {
+        transform: translate(-5px, 0);
+    }
+}
+
+/* ============================================
+   SUBTITLE WITH GLITCH TRANSITION
+   ============================================ */
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--slate-400);
+    margin-bottom: 2.5rem;
+    max-width: 52rem;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.75;
+    animation: fadeInUp 1s ease-out 0.5s both;
+    transition: all 0.3s ease;
+}
+
+.subtitle-glitch {
+    animation: subtitleGlitchEffect 0.5s ease-in-out;
+}
+
+@keyframes subtitleGlitchEffect {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    20% {
+        opacity: 0.7;
+        transform: translateY(-3px) skewX(1deg);
+        filter: blur(0.5px);
+    }
+    40% {
+        opacity: 0.3;
+        transform: translateY(3px) skewX(-1deg);
+        filter: blur(1px);
+    }
+    50% {
+        opacity: 0;
+        filter: blur(2px);
+    }
+    60% {
+        opacity: 0.3;
+        transform: translateY(-2px);
+    }
+    80% {
+        opacity: 0.7;
+        transform: translateY(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: none;
+    }
+}
+
+/* ============================================
+   CTA BUTTONS WITH GLITCH ON HOVER
+   ============================================ */
+
+.hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease-out 0.7s both;
+}
+
+.btn-enhanced {
+    padding: 0.875rem 1.875rem;
+    font-size: 1rem;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 8px 30px rgba(34, 211, 238, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-enhanced span {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-glow {
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(
+        45deg,
+        var(--cyan-400),
+        var(--purple-400)
+    );
+    border-radius: inherit;
+    opacity: 0;
+    filter: blur(15px);
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.btn-enhanced:hover .btn-glow {
+    opacity: 0.7;
+}
+
+/* Button Glitch Effect on Hover */
+.btn-glitch-hover:hover {
+    animation: buttonGlitch 0.3s ease-in-out;
+}
+
+@keyframes buttonGlitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(2px, -2px);
+    }
+    60% {
+        transform: translate(-1px, -1px);
+    }
+    80% {
+        transform: translate(1px, 1px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+.btn-glass {
+    padding: 0.875rem 1.875rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        0 6px 25px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-glass:hover {
+    background: rgba(30, 41, 59, 0.75);
+    border-color: rgba(34, 211, 238, 0.45);
+    box-shadow: 
+        0 10px 35px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-glass svg {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+/* ============================================
+   PILLS
+   ============================================ */
+
+.capability-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    max-width: 58rem;
+    margin: 0 auto 2.5rem;
+}
+
+.pill-enhanced {
+    padding: 0.625rem 1.25rem;
+    background: rgba(30, 41, 59, 0.65);
+    border: 1px solid var(--slate-700);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    color: var(--slate-300);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    font-weight: 500;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    animation: pillFloatAdvanced 7s ease-in-out infinite;
+}
+
+@keyframes pillFloatAdvanced {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.pill-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.08),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+}
+
+.pill-enhanced:hover {
+    border-color: rgba(34, 211, 238, 0.75);
+    background: rgba(34, 211, 238, 0.18);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(34, 211, 238, 0.35);
+    color: var(--cyan-400);
+}
+
+.pill-enhanced:hover .pill-shine {
+    left: 150%;
+}
+
+/* ============================================
+   SCROLL INDICATOR
+   ============================================ */
+
+.scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+    animation: fadeInUp 1s ease-out 1.2s both;
+}
+
+.scroll-mouse {
+    width: 1.75rem;
+    height: 2.75rem;
+    border: 2px solid rgba(34, 211, 238, 0.45);
+    border-radius: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+}
+
+.scroll-wheel {
+    width: 3px;
+    height: 7px;
+    background: var(--cyan-400);
+    border-radius: 2px;
+    animation: scrollWheel 2.5s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+}
+
+@keyframes scrollWheel {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(10px);
+        opacity: 0.3;
+    }
+}
+
+.scroll-indicator span {
+    font-size: 0.8125rem;
+    color: var(--slate-400);
+    letter-spacing: 0.3px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 6rem 1.25rem 3rem;
+    }
+
+    .hero-title-container {
+        min-height: 180px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: -1px;
+        line-height: 1.3;
+    }
+
+    .gradient-text-enhanced {
+        margin-bottom: 0.5rem;
+        white-space: normal;
+    }
+
+    .hero-subtitle-text {
+        white-space: normal;
+    }
+
+    .hero-subtitle {
+        font-size: 1.0625rem;
+        margin-bottom: 2rem;
+    }
+
+    .badge-enhanced {
+        padding: 0.5rem 1.125rem;
+        font-size: 0.8125rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-cta {
+        gap: 0.875rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .btn-enhanced,
+    .btn-glass {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9375rem;
+    }
+
+    .pill-enhanced {
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+    }
+
+    .capability-pills {
+        gap: 0.625rem;
+        margin-bottom: 2rem;
+    }
+
+    .glow-orb {
+        width: 18rem;
+        height: 18rem;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+
+    @keyframes flipGlitchTransition {
+        0% {
+            opacity: 1;
+            transform: rotateX(0deg);
+        }
+        50% {
+            opacity: 0;
+            transform: rotateX(90deg) scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: rotateX(0deg);
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-title {
+        font-size: 3.25rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1875rem;
+    }
+
+    .hero-title-container {
+        min-height: 240px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .hero-title {
+        font-size: 4rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.375rem;
+    }
+}
+
+@media (min-width: 1440px) {
+    .hero-title {
+        font-size: 4.5rem;
+    }
+
+    .hero-content {
+        max-width: 75rem;
+    }
+
+    .hero-title-container {
+        min-height: 300px;
+    }
+}

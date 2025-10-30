@@ -28,7 +28,7 @@ export default function CTA() {
         <div className="cta-card">
           <h2>Ready to Transform Your Business?</h2>
           <p>
-            Join thousands of enterprises already using SmartAI Foundry to
+            Join thousands of enterprises already using Hybrid AI Solution to
             automate workflows and drive innovation.
           </p>
           <div className="cta-buttons">

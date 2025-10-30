@@ -1,0 +1,906 @@
+/* ============================================
+   ABOUT SECTION - Enhanced Design
+   ============================================ */
+
+.about-section {
+    position: relative;
+    padding: 6rem 1.5rem;
+    background: var(--slate-950);
+    overflow: hidden;
+}
+
+/* ============================================
+   DECORATIVE ELEMENTS
+   ============================================ */
+
+.about-decoration {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.about-decoration-top {
+    top: -10%;
+    right: -5%;
+    width: 40rem;
+    height: 40rem;
+    background: radial-gradient(
+        circle,
+        rgba(34, 211, 238, 0.08) 0%,
+        rgba(168, 85, 247, 0.05) 40%,
+        transparent 70%
+    );
+    filter: blur(80px);
+    animation: floatDecoration 15s ease-in-out infinite;
+}
+
+.about-decoration-bottom {
+    bottom: -15%;
+    left: -10%;
+    width: 50rem;
+    height: 50rem;
+    background: radial-gradient(
+        circle,
+        rgba(168, 85, 247, 0.08) 0%,
+        rgba(34, 211, 238, 0.05) 40%,
+        transparent 70%
+    );
+    filter: blur(80px);
+    animation: floatDecoration 20s ease-in-out infinite reverse;
+}
+
+@keyframes floatDecoration {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+}
+
+/* ============================================
+   CONTAINER & LAYOUT
+   ============================================ */
+
+.about-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+.about-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.about-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.about-gradient-text {
+    background: linear-gradient(
+        135deg,
+        var(--cyan-400),
+        var(--purple-400)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-subtitle {
+    font-size: 1.125rem;
+    color: var(--slate-400);
+    line-height: 1.8;
+    max-width: 54rem;
+    margin: 0 auto 3rem;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* ============================================
+   STATS SECTION - FIXED ALIGNMENT
+   ============================================ */
+
+.about-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 2.5rem 0;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 100px;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--cyan-400), var(--purple-400));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--slate-400);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ============================================
+   CARDS GRID
+   ============================================ */
+
+.about-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin: 4rem 0;
+}
+
+/* ============================================
+   INDIVIDUAL CARD
+   ============================================ */
+
+.about-card {
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(34, 211, 238, 0.15);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.about-card:nth-child(1) { animation-delay: 0.1s; }
+.about-card:nth-child(2) { animation-delay: 0.2s; }
+.about-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(
+        135deg,
+        var(--cyan-400),
+        var(--purple-400)
+    );
+    border-radius: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.about-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.05),
+        rgba(168, 85, 247, 0.02)
+    );
+    border-radius: 1.5rem;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.about-card:hover {
+    border-color: rgba(34, 211, 238, 0.4);
+    transform: translateY(-15px);
+    box-shadow: 
+        0 20px 50px rgba(34, 211, 238, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.about-card:hover::before {
+    opacity: 0.2;
+}
+
+/* ============================================
+   CARD HEADER & ICON
+   ============================================ */
+
+.about-card-header {
+    position: relative;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.about-card-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.about-icon-cyan {
+    background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.25),
+        rgba(6, 182, 212, 0.15)
+    );
+    border: 1px solid rgba(34, 211, 238, 0.3);
+}
+
+.about-icon-purple {
+    background: linear-gradient(
+        135deg,
+        rgba(168, 85, 247, 0.25),
+        rgba(147, 51, 234, 0.15)
+    );
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.about-icon-pink {
+    background: linear-gradient(
+        135deg,
+        rgba(244, 114, 182, 0.25),
+        rgba(236, 72, 153, 0.15)
+    );
+    border: 1px solid rgba(244, 114, 182, 0.3);
+}
+
+.about-card-icon svg {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--cyan-400);
+}
+
+.about-icon-purple svg {
+    color: var(--purple-400);
+}
+
+.about-icon-pink svg {
+    color: var(--pink-400);
+}
+
+.about-card:hover .about-card-icon {
+    transform: rotate(10deg) scale(1.15);
+}
+
+.about-icon-cyan:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.4),
+        rgba(6, 182, 212, 0.25)
+    );
+    box-shadow: 0 12px 30px rgba(34, 211, 238, 0.4);
+}
+
+.about-icon-purple:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(168, 85, 247, 0.4),
+        rgba(147, 51, 234, 0.25)
+    );
+    box-shadow: 0 12px 30px rgba(168, 85, 247, 0.4);
+}
+
+.about-icon-pink:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(244, 114, 182, 0.4),
+        rgba(236, 72, 153, 0.25)
+    );
+    box-shadow: 0 12px 30px rgba(244, 114, 182, 0.4);
+}
+
+/* Accent line */
+.about-card-accent {
+    width: 3px;
+    height: 2rem;
+    background: linear-gradient(
+        180deg,
+        var(--cyan-400),
+        transparent
+    );
+    border-radius: 2px;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+.about-card-accent-purple {
+    background: linear-gradient(
+        180deg,
+        var(--purple-400),
+        transparent
+    );
+}
+
+.about-card-accent-pink {
+    background: linear-gradient(
+        180deg,
+        var(--pink-400),
+        transparent
+    );
+}
+
+/* ============================================
+   CARD CONTENT
+   ============================================ */
+
+.about-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.about-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.about-card:hover .about-card-title {
+    color: var(--cyan-400);
+}
+
+.about-card-text {
+    font-size: 0.9375rem;
+    color: var(--slate-400);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.about-card:hover .about-card-text {
+    color: var(--slate-300);
+}
+
+/* ============================================
+   FEATURE TAGS
+   ============================================ */
+
+.about-card-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.feature-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--cyan-400);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.about-card:hover .feature-tag {
+    background: rgba(34, 211, 238, 0.2);
+    border-color: rgba(34, 211, 238, 0.4);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   MISSION & VISION SECTION
+   ============================================ */
+
+.about-mission-vision {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin: 5rem 0;
+    padding: 3.5rem 2.5rem;
+    background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.08),
+        rgba(168, 85, 247, 0.05)
+    );
+    border: 1px solid rgba(34, 211, 238, 0.15);
+    border-radius: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-mission-vision::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at 0% 0%,
+        rgba(34, 211, 238, 0.05) 0%,
+        transparent 50%
+    );
+    pointer-events: none;
+}
+
+.mission-vision-card {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.mission-vision-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    margin: 0 auto 1.5rem;
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+}
+
+.mission-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.25),
+        rgba(6, 182, 212, 0.15)
+    );
+    border: 2px solid var(--cyan-400);
+}
+
+.vision-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(168, 85, 247, 0.25),
+        rgba(147, 51, 234, 0.15)
+    );
+    border: 2px solid var(--purple-400);
+}
+
+.mission-vision-icon svg {
+    width: 2.25rem;
+    height: 2.25rem;
+}
+
+.mission-icon svg {
+    color: var(--cyan-400);
+}
+
+.vision-icon svg {
+    color: var(--purple-400);
+}
+
+.mission-vision-card:hover .mission-vision-icon {
+    transform: scale(1.1) rotateY(10deg);
+}
+
+.mission-vision-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.mission-vision-text {
+    font-size: 0.9375rem;
+    color: var(--slate-400);
+    line-height: 1.8;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.mission-vision-divider {
+    width: 2px;
+    height: 150px;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(34, 211, 238, 0.3),
+        transparent
+    );
+}
+
+/* ============================================
+   CORE VALUES SECTION
+   ============================================ */
+
+.core-values {
+    margin: 5rem 0 0 0;
+}
+
+.core-values-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.value-item {
+    padding: 2rem;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(34, 211, 238, 0.1);
+    border-radius: 1.25rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.value-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan-400), var(--purple-400));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.value-item:hover::before {
+    transform: scaleX(1);
+}
+
+.value-item:hover {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(34, 211, 238, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(34, 211, 238, 0.15);
+}
+
+.value-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto 1.25rem;
+    background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.15),
+        rgba(168, 85, 247, 0.1)
+    );
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.value-icon svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: var(--cyan-400);
+    transition: all 0.3s ease;
+}
+
+.value-item:hover .value-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(34, 211, 238, 0.3),
+        rgba(168, 85, 247, 0.2)
+    );
+    border-color: rgba(34, 211, 238, 0.4);
+    transform: scale(1.15);
+}
+
+.value-item:hover .value-icon svg {
+    color: var(--purple-400);
+    transform: rotate(10deg);
+}
+
+.value-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.value-item:hover .value-name {
+    color: var(--cyan-400);
+}
+
+.value-desc {
+    font-size: 0.875rem;
+    color: var(--slate-400);
+    transition: color 0.3s ease;
+}
+
+.value-item:hover .value-desc {
+    color: var(--slate-300);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .about-title {
+        font-size: 3rem;
+    }
+
+    .about-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .about-mission-vision {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .mission-vision-divider {
+        width: 100px;
+        height: 2px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        padding: 4rem 1.25rem;
+    }
+
+    .about-title {
+        font-size: 2.25rem;
+    }
+
+    .about-subtitle {
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    .about-stats {
+        gap: 1.5rem;
+        padding: 2rem 0;
+    }
+
+    .stat-item {
+        gap: 0.4rem;
+        min-width: auto;
+    }
+
+    .stat-value {
+        font-size: 1.875rem;
+    }
+
+    .stat-label {
+        font-size: 0.8125rem;
+    }
+
+    .about-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 3rem 0;
+    }
+
+    .about-card {
+        padding: 1.75rem;
+    }
+
+    .about-card-header {
+        gap: 0.75rem;
+    }
+
+    .about-card-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .about-card-icon svg {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .about-card-title {
+        font-size: 1.25rem;
+    }
+
+    .about-card-text {
+        text-align: left;
+    }
+
+    .about-mission-vision {
+        padding: 2.5rem 1.75rem;
+        border-radius: 1.5rem;
+    }
+
+    .mission-vision-text {
+        text-align: left;
+    }
+
+    .core-values-title {
+        font-size: 1.75rem;
+    }
+
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .about-decoration-top,
+    .about-decoration-bottom {
+        width: 25rem;
+        height: 25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-section {
+        padding: 3rem 1rem;
+    }
+
+    .about-title {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .about-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+
+    .about-stats {
+        gap: 1rem;
+        padding: 1.5rem 0;
+        justify-content: space-around;
+    }
+
+    .stat-item {
+        min-width: 60px;
+    }
+
+    .stat-value {
+        font-size: 1.625rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .about-cards-grid {
+        margin: 2rem 0;
+        gap: 1.25rem;
+    }
+
+    .about-card {
+        padding: 1.5rem;
+    }
+
+    .about-card-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .about-card-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .about-card-icon svg {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .about-card-title {
+        font-size: 1.125rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .about-card-text {
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    .feature-tag {
+        font-size: 0.7rem;
+        padding: 0.35rem 0.7rem;
+    }
+
+    .about-mission-vision {
+        padding: 1.75rem 1rem;
+        margin: 3rem 0;
+        gap: 1.5rem;
+    }
+
+    .mission-vision-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .mission-vision-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .mission-vision-title {
+        font-size: 1.125rem;
+    }
+
+    .mission-vision-text {
+        font-size: 0.875rem;
+    }
+
+    .core-values-title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .value-item {
+        padding: 1.25rem;
+    }
+
+    .value-icon {
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .value-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .value-name {
+        font-size: 1rem;
+    }
+
+    .value-desc {
+        font-size: 0.8rem;
+    }
+
+    .about-decoration-top,
+    .about-decoration-bottom {
+        width: 15rem;
+        height: 15rem;
+    }
+}

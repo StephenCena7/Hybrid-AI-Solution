@@ -1,17 +1,22 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [currentTextIndex, setCurrentTextIndex] = useState(0)
+  const heroContentRef = useRef<HTMLDivElement>(null)
+  const badgeRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const subtitleRef = useRef<HTMLDivElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
   
-  // Separate transition states for each element
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
+  const [scanlinePosition, setScanlinePosition] = useState(0)
+  
+  // Transition states
   const [badgeTransitioning, setBadgeTransitioning] = useState(false)
   const [titleTransitioning, setTitleTransitioning] = useState(false)
   const [subtitleTransitioning, setSubtitleTransitioning] = useState(false)
   const [descriptionTransitioning, setDescriptionTransitioning] = useState(false)
-
 
   const textVariations = [
     {
@@ -28,15 +33,13 @@ export default function Hero() {
     }
   ]
 
-
+  // Particle animation
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-
     const ctx = canvas.getContext('2d')
     if (!ctx) return
-
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
@@ -44,7 +47,6 @@ export default function Hero() {
     }
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
-
 
     const particles: Array<{
       x: number
@@ -55,7 +57,6 @@ export default function Hero() {
       opacity: number
       color: string
     }> = []
-
 
     for (let i = 0; i < 80; i++) {
       particles.push({
@@ -69,10 +70,8 @@ export default function Hero() {
       })
     }
 
-
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-
 
       particles.forEach((particle, i) => {
         ctx.beginPath()
@@ -81,13 +80,11 @@ export default function Hero() {
         ctx.globalAlpha = particle.opacity
         ctx.fill()
 
-
         particles.forEach((particle2, j) => {
           if (i === j) return
           const dx = particle.x - particle2.x
           const dy = particle.y - particle2.y
           const distance = Math.sqrt(dx * dx + dy * dy)
-
 
           if (distance < 150) {
             ctx.beginPath()
@@ -100,101 +97,117 @@ export default function Hero() {
           }
         })
 
-
         particle.x += particle.speedX
         particle.y += particle.speedY
-
 
         if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1
         if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1
       })
 
-
       ctx.globalAlpha = 1
       requestAnimationFrame(animate)
     }
 
-
     animate()
-
 
     return () => {
       window.removeEventListener('resize', resizeCanvas)
     }
   }, [])
 
-
-  // SEQUENTIAL TRANSITIONS with PRECISE TIMING
+  // Scanline-triggered transitions
   useEffect(() => {
+    const scanlineDuration = 6000 // 6 seconds for full cycle
     const transitionDuration = 500
-    
-    // CALIBRATED TIMING (adjust these values to match your screen)
-    const badgeTiming = 1500       // Badge transition
-    const titleTiming = 2200       // Title transition  
-    const subtitleTiming = 2700    // Subtitle transition
-    const descriptionTiming = 3300 // Description transition
-    
-    const timers: NodeJS.Timeout[] = []
+    let animationFrameId: number
+    let startTime: number | null = null
 
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime
+      const elapsed = currentTime - startTime
+      const progress = (elapsed % scanlineDuration) / scanlineDuration
 
-    // 1. Badge transition
-    timers.push(setTimeout(() => {
-      setBadgeTransitioning(true)
-      setTimeout(() => setBadgeTransitioning(false), transitionDuration)
-    }, badgeTiming))
+      setScanlinePosition(progress)
 
+      // Get element positions
+      const badge = badgeRef.current
+      const title = titleRef.current
+      const subtitle = subtitleRef.current
+      const description = descriptionRef.current
 
-    // 2. Title transition
-    timers.push(setTimeout(() => {
-      setTitleTransitioning(true)
-      setTimeout(() => setTitleTransitioning(false), transitionDuration)
-    }, titleTiming))
+      if (badge && title && subtitle && description) {
+        const heroRect = heroContentRef.current?.getBoundingClientRect()
+        if (!heroRect) return
 
+        const badgeTop = badge.getBoundingClientRect().top - heroRect.top
+        const titleTop = title.getBoundingClientRect().top - heroRect.top
+        const subtitleTop = subtitle.getBoundingClientRect().top - heroRect.top
+        const descriptionTop = description.getBoundingClientRect().top - heroRect.top
 
-    // 3. Subtitle transition
-    timers.push(setTimeout(() => {
-      setSubtitleTransitioning(true)
-      setTimeout(() => setSubtitleTransitioning(false), transitionDuration)
-    }, subtitleTiming))
+        const heroHeight = heroRect.height
+        const scanlineY = progress * heroHeight * 1.1 - heroHeight * 0.05
 
+        // Trigger transitions when scanline passes each element
+        const threshold = 20
 
-    // 4. Description transition + CHANGE TEXT
-    timers.push(setTimeout(() => {
-      setDescriptionTransitioning(true)
-      setTimeout(() => {
-        setDescriptionTransitioning(false)
-        // Change all text AFTER last transition completes
-        setCurrentTextIndex((prev) => (prev + 1) % textVariations.length)
-      }, transitionDuration)
-    }, descriptionTiming))
+        // Badge transition
+        if (Math.abs(scanlineY - badgeTop) < threshold && !badgeTransitioning) {
+          setBadgeTransitioning(true)
+          setTimeout(() => setBadgeTransitioning(false), transitionDuration)
+        }
 
+        // Title transition
+        if (Math.abs(scanlineY - titleTop) < threshold && !titleTransitioning) {
+          setTitleTransitioning(true)
+          setTimeout(() => setTitleTransitioning(false), transitionDuration)
+        }
+
+        // Subtitle transition
+        if (Math.abs(scanlineY - subtitleTop) < threshold && !subtitleTransitioning) {
+          setSubtitleTransitioning(true)
+          setTimeout(() => setSubtitleTransitioning(false), transitionDuration)
+        }
+
+        // Description transition (and change all text after)
+        if (Math.abs(scanlineY - descriptionTop) < threshold && !descriptionTransitioning) {
+          setDescriptionTransitioning(true)
+          setTimeout(() => {
+            setDescriptionTransitioning(false)
+            setCurrentTextIndex((prev) => (prev + 1) % textVariations.length)
+          }, transitionDuration)
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animate)
+    }
+
+    animationFrameId = requestAnimationFrame(animate)
 
     return () => {
-      timers.forEach(timer => clearTimeout(timer))
+      cancelAnimationFrame(animationFrameId)
     }
-  }, [currentTextIndex, textVariations.length])
-
+  }, [badgeTransitioning, titleTransitioning, subtitleTransitioning, descriptionTransitioning, textVariations.length])
 
   const currentText = textVariations[currentTextIndex]
-
 
   return (
     <section className="hero">
       <canvas ref={canvasRef} className="hero-canvas" />
-
 
       <div className="hero-background">
         <div className="glow-orb orb-1"></div>
         <div className="glow-orb orb-2"></div>
         <div className="glow-orb orb-3"></div>
         <div className="grid-pattern"></div>
-        <div className="scanline"></div>
+        <div className="scanline" style={{ top: `${scanlinePosition * 110 - 5}%` }}></div>
       </div>
 
-
-      <div className="hero-content">
-        {/* 1. BADGE - First to transition */}
-        <div className={`badge badge-enhanced ${badgeTransitioning ? 'badge-glitch' : ''}`}>
+      <div className="hero-content" ref={heroContentRef}>
+        {/* Badge */}
+        <div 
+          ref={badgeRef}
+          className={`badge badge-enhanced ${badgeTransitioning ? 'badge-glitch' : ''}`}
+        >
           <svg className="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
           </svg>
@@ -202,26 +215,32 @@ export default function Hero() {
           <div className="badge-shine"></div>
         </div>
 
-
         <div className="hero-title-container">
           <h1 className="hero-title">
-            {/* 2. TITLE - Second to transition */}
-            <span className={`gradient-text gradient-text-enhanced ${titleTransitioning ? 'text-glitch-flip' : ''}`}>
+            {/* Title */}
+            <span 
+              ref={titleRef}
+              className={`gradient-text gradient-text-enhanced ${titleTransitioning ? 'text-glitch-flip' : ''}`}
+            >
               {currentText.title}
             </span>
-            {/* 3. SUBTITLE - Third to transition */}
-            <span className={`hero-subtitle-text ${subtitleTransitioning ? 'text-glitch-flip' : ''}`}>
+            {/* Subtitle */}
+            <span 
+              ref={subtitleRef}
+              className={`hero-subtitle-text ${subtitleTransitioning ? 'text-glitch-flip' : ''}`}
+            >
               {currentText.subtitle}
             </span>
           </h1>
         </div>
 
-
-        {/* 4. DESCRIPTION - Last to transition */}
-        <p className={`hero-subtitle ${descriptionTransitioning ? 'subtitle-glitch' : ''}`}>
+        {/* Description */}
+        <p 
+          ref={descriptionRef}
+          className={`hero-subtitle ${descriptionTransitioning ? 'subtitle-glitch' : ''}`}
+        >
           {currentText.description}
         </p>
-
 
         <div className="hero-cta">
           <button className="btn-primary btn-large btn-enhanced btn-glitch-hover">
@@ -240,7 +259,6 @@ export default function Hero() {
           </button>
         </div>
 
-
         <div className="capability-pills">
           {['Autonomous Decision Making', 'Real-time Analytics', 'Predictive Insights', 
             'Workflow Automation', 'Natural Language Processing', 'Enterprise Integration'].map((text, i) => (
@@ -250,7 +268,6 @@ export default function Hero() {
             </span>
           ))}
         </div>
-
 
         <div className="scroll-indicator">
           <div className="scroll-mouse">

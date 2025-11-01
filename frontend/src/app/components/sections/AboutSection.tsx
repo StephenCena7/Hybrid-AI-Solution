@@ -1,17 +1,27 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function AboutSection() {
   const sectionRef = useRef(null)
   const headerRef = useRef(null)
+  const statsRef = useRef(null)
   const cardsRef = useRef(null)
   const missionRef = useRef(null)
   const valuesRef = useRef(null)
 
+  const [stats, setStats] = useState({ years: 0, projects: 0, clients: 0 })
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  const statTargets = {
+    years: 20,
+    projects: 500,
+    clients: 50
+  }
+
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.1,
+      threshold: 0.3,
       rootMargin: '0px 0px -50px 0px'
     }
 
@@ -31,6 +41,49 @@ export default function AboutSection() {
 
     return () => observer.disconnect()
   }, [])
+
+  // Animated counter effect
+  useEffect(() => {
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true)
+          animateCounters()
+          statsObserver.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.4 })
+
+    if (statsRef.current) {
+      statsObserver.observe(statsRef.current)
+    }
+
+    return () => statsObserver.disconnect()
+  }, [hasAnimated])
+
+  const animateCounters = () => {
+    const duration = 2000
+    const startTime = Date.now()
+
+    const updateCounters = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+
+      const easeOutQuad = 1 - (1 - progress) * (1 - progress)
+
+      setStats({
+        years: Math.floor(statTargets.years * easeOutQuad),
+        projects: Math.floor(statTargets.projects * easeOutQuad),
+        clients: Math.floor(statTargets.clients * easeOutQuad)
+      })
+
+      if (progress < 1) {
+        requestAnimationFrame(updateCounters)
+      }
+    }
+
+    requestAnimationFrame(updateCounters)
+  }
 
   return (
     <section className="about-section" ref={sectionRef} id="about">
@@ -52,19 +105,30 @@ export default function AboutSection() {
             With over two decades of ERP experience across diverse industries, Hybrid AI Solution stands as a trusted partner for organizations pursuing efficiency, innovation, and intelligence. Our teams have delivered transformative ERP, CRM, HRMS, Billing, and AI-driven systems that empower businesses to scale smarter and operate seamlessly.
           </p>
 
-          {/* Stats */}
-          <div className="about-stats">
-            <div className="stat-item">
-              <div className="stat-value">20+</div>
-              <div className="stat-label">Years Active</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-value">500+</div>
-              <div className="stat-label">Projects Delivered</div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-value">50+</div>
-              <div className="stat-label">Global Clients</div>
+          {/* Enhanced Stats with Animation */}
+          <div className="about-stats-wrapper" ref={statsRef}>
+            <div className="about-stats-container">
+              <div className="stat-item stat-item-enhanced">
+                <div className="stat-value-animated">{stats.years}+</div>
+                <div className="stat-label">Years Active</div>
+                <div className="stat-bar">
+                  <div className="stat-bar-fill" style={{ width: `${(stats.years / statTargets.years) * 100}%` }}></div>
+                </div>
+              </div>
+              <div className="stat-item stat-item-enhanced">
+                <div className="stat-value-animated">{stats.projects}+</div>
+                <div className="stat-label">Projects Delivered</div>
+                <div className="stat-bar">
+                  <div className="stat-bar-fill" style={{ width: `${(stats.projects / statTargets.projects) * 100}%` }}></div>
+                </div>
+              </div>
+              <div className="stat-item stat-item-enhanced">
+                <div className="stat-value-animated">{stats.clients}+</div>
+                <div className="stat-label">Global Clients</div>
+                <div className="stat-bar">
+                  <div className="stat-bar-fill" style={{ width: `${(stats.clients / statTargets.clients) * 100}%` }}></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

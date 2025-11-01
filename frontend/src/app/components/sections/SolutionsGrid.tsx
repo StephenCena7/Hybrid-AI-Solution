@@ -1,6 +1,17 @@
 'use client'
 
-const solutions = [
+import { JSX, useEffect, useRef } from 'react'
+
+interface Solution {
+  id: number
+  title: string
+  description: string
+  icon: JSX.Element
+  color: string
+  features?: string[]
+}
+
+const solutions: Solution[] = [
   {
     id: 1,
     title: 'ERP Systems',
@@ -12,7 +23,8 @@ const solutions = [
         <line x1="9" y1="21" x2="9" y2="9"/>
       </svg>
     ),
-    color: 'cyan'
+    color: 'cyan',
+    features: ['Finance', 'Procurement', 'Supply Chain']
   },
   {
     id: 2,
@@ -25,19 +37,23 @@ const solutions = [
         <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
       </svg>
     ),
-    color: 'purple'
+    color: 'purple',
+    features: ['Sales', 'Marketing', 'Customer Engagement']
   },
   {
     id: 3,
-    title: 'Billing & Accounting',
-    description: 'Automated billing, real-time reporting, and financial accuracy across all operations.',
+    title: 'Retail Solutions',
+    description: 'Omnichannel retail management with inventory sync, multi-store operations, and customer analytics.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-        <line x1="1" y1="10" x2="23" y2="10"/>
+        <circle cx="9" cy="21" r="1"/>
+        <circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+        <path d="M6 10h17"/>
       </svg>
     ),
-    color: 'green'
+    color: 'green',
+    features: ['Multi-Store', 'Inventory', 'Analytics']
   },
   {
     id: 4,
@@ -49,12 +65,13 @@ const solutions = [
         <circle cx="12" cy="7" r="4"/>
       </svg>
     ),
-    color: 'pink'
+    color: 'pink',
+    features: ['Recruitment', 'Payroll', 'Performance']
   },
   {
     id: 5,
     title: 'Point of Sale',
-    description: 'Next-gen retail POS with real-time inventory, multi-location support, and analytics.',
+    description: 'Next-gen retail POS with real-time inventory, multi-location support, and advanced analytics.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
@@ -62,27 +79,60 @@ const solutions = [
         <path d="M16 10a4 4 0 01-8 0"/>
       </svg>
     ),
-    color: 'orange'
+    color: 'orange',
+    features: ['Real-time', 'Multi-location', 'Analytics']
   },
   {
     id: 6,
-    title: 'SAP Business One',
-    description: 'Implementation and customization of SAP B1 to optimize core ERP functions for SMBs.',
+    title: 'Business Intelligence',
+    description: 'Advanced analytics and AI-driven insights to empower data-driven decision making across enterprise.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        <line x1="9" y1="3" x2="9" y2="21"/>
+        <line x1="15" y1="21" x2="15" y2="3"/>
       </svg>
     ),
-    color: 'violet'
+    color: 'violet',
+    features: ['Analytics', 'AI-Insights', 'Dashboards']
   }
 ]
 
 export default function SolutionsGrid() {
+  const sectionRef = useRef(null)
+  const headerRef = useRef(null)
+  const gridRef = useRef(null)
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, observerOptions)
+
+    if (headerRef.current) observer.observe(headerRef.current)
+    if (gridRef.current) observer.observe(gridRef.current)
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <section className="solutions-section">
+    <section className="solutions-section" ref={sectionRef} id="solutions">
+      {/* Decorative Background Elements */}
+      <div className="solutions-decoration solutions-decoration-top"></div>
+      <div className="solutions-decoration solutions-decoration-bottom"></div>
+
       <div className="solutions-container">
         {/* Header */}
-        <div className="solutions-header">
+        <div className="solutions-header" ref={headerRef}>
           <h2 className="solutions-title">
             Our{' '}
             <span className="solutions-gradient-text">
@@ -96,21 +146,41 @@ export default function SolutionsGrid() {
         </div>
 
         {/* Solutions Grid */}
-        <div className="solutions-grid">
+        <div className="solutions-grid" ref={gridRef}>
           {solutions.map((solution, index) => (
             <div 
               key={solution.id} 
               className="solution-card"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ animationDelay: `${index * 0.08}s` }}
             >
+              {/* Card Background Effects */}
+              <div className="solution-card-bg"></div>
+              <div className="solution-card-border"></div>
+
+              {/* Icon Section */}
               <div className={`solution-icon solution-icon-${solution.color}`}>
                 {solution.icon}
+                <div className="solution-icon-glow"></div>
               </div>
-              <h3 className="solution-title">{solution.title}</h3>
-              <p className="solution-description">{solution.description}</p>
-              
-              {/* Hover effect overlay */}
+
+              {/* Content Section */}
+              <div className="solution-content">
+                <h3 className="solution-title">{solution.title}</h3>
+                <p className="solution-description">{solution.description}</p>
+
+                {/* Features Tags */}
+                {solution.features && (
+                  <div className="solution-features">
+                    {solution.features.map((feature, idx) => (
+                      <span key={idx} className="feature-badge">{feature}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Hover Effects */}
               <div className="solution-hover-effect"></div>
+              <div className="solution-shine"></div>
             </div>
           ))}
         </div>

@@ -1,4 +1,13 @@
 /* ============================================
+   GLOBAL OVERFLOW FIX
+   ============================================ */
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ============================================
    HERO SECTION - Hydro AI Solution
    ============================================ */
 
@@ -905,6 +914,10 @@
     }
 }
 
+/* ============================================
+   DESKTOP COMPACT GAPS - ONLY FOR DESKTOP
+   ============================================ */
+
 @media (min-width: 1025px) {
     .hero-title {
         font-size: 4rem;
@@ -912,6 +925,31 @@
 
     .hero-subtitle {
         font-size: 1.375rem;
+    }
+
+    /* REDUCE GAPS ONLY ON DESKTOP */
+    .badge-enhanced {
+        margin-bottom: 1rem;
+    }
+
+    .gradient-text-enhanced {
+        margin-bottom: 0.25rem;
+    }
+
+    .hero-subtitle-text {
+        margin-bottom: 0;
+    }
+
+    .hero-subtitle {
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-cta {
+        margin-bottom: 2rem;
+    }
+
+    .capability-pills {
+        margin-bottom: 1.5rem;
     }
 }
 

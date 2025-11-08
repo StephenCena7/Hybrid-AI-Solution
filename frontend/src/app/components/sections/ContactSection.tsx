@@ -5,32 +5,64 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     company: '',
+    service: '',
+    budget: '',
+    timeline: '',
     message: ''
   })
 
-  const [formStatus, setFormStatus] = useState('')
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setFormStatus('sending')
-    
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formData)
-      setFormStatus('success')
-      setFormData({ name: '', email: '', company: '', message: '' })
-      
-      // Reset status after 3 seconds
-      setTimeout(() => setFormStatus(''), 3000)
-    }, 1500)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setFormStatus('sending')
+    setErrorMessage('')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send request')
+      }
+
+      setFormStatus('success')
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: '',
+        budget: '',
+        timeline: '',
+        message: ''
+      })
+
+      setTimeout(() => {
+        setFormStatus('idle')
+      }, 3000)
+    } catch (error) {
+      console.error('Error sending request:', error)
+      setFormStatus('error')
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to send request')
+    }
   }
 
   return (
@@ -57,13 +89,13 @@ export default function ContactSection() {
         <div className="contact-content">
           {/* Contact Form */}
           <div className="contact-form-wrapper">
-            <form onSubmit={handleSubmit} className="contact-form">
+            <form onSubmit={handleSubmit} className="contact-form quotation-form">
               <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="name">Your Name</label>
+                  <label htmlFor="c-name">Full Name *</label>
                   <input
                     type="text"
-                    id="name"
+                    id="c-name"
                     name="name"
                     placeholder="John Doe"
                     value={formData.name}
@@ -73,10 +105,10 @@ export default function ContactSection() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Your Email</label>
+                  <label htmlFor="c-email">Email Address *</label>
                   <input
                     type="email"
-                    id="email"
+                    id="c-email"
                     name="email"
                     placeholder="john@example.com"
                     value={formData.email}
@@ -87,32 +119,117 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="company">Company Name</label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  placeholder="Your Company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="form-input"
-                />
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="c-phone">Phone Number *</label>
+                  <input
+                    type="tel"
+                    id="c-phone"
+                    name="phone"
+                    placeholder="+91 98765 43210"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="form-input"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="c-company">Company Name</label>
+                  <input
+                    type="text"
+                    id="c-company"
+                    name="company"
+                    placeholder="Your Company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="form-input"
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="c-service">Service Required *</label>
+                  <select
+                    id="c-service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className="form-select"
+                    required
+                  >
+                    <option value="">Select a service</option>
+                    <option value="ERP Systems">ERP Systems</option>
+                    <option value="CRM Solutions">CRM Solutions</option>
+                    <option value="Retail Solutions">Retail Solutions</option>
+                    <option value="HRMS Platform">HRMS Platform</option>
+                    <option value="Point of Sale">Point of Sale</option>
+                    <option value="Business Intelligence">Business Intelligence</option>
+                    <option value="Custom Solution">Custom Solution</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="c-budget">Budget Range</label>
+                  <select
+                    id="c-budget"
+                    name="budget"
+                    value={formData.budget}
+                    onChange={handleChange}
+                    className="form-select"
+                  >
+                    <option value="">Select budget range</option>
+                    <option value="Under ₹5L">Under ₹5 Lakhs</option>
+                    <option value="₹5L - ₹10L">₹5 - 10 Lakhs</option>
+                    <option value="₹10L - ₹25L">₹10 - 25 Lakhs</option>
+                    <option value="₹25L - ₹50L">₹25 - 50 Lakhs</option>
+                    <option value="Above ₹50L">Above ₹50 Lakhs</option>
+                  </select>
+                </div>
               </div>
 
               <div className="form-group">
-                <label htmlFor="message">Project Details</label>
+                <label htmlFor="c-timeline">Expected Timeline</label>
+                <select
+                  id="c-timeline"
+                  name="timeline"
+                  value={formData.timeline}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="">Select timeline</option>
+                  <option value="Immediate">Immediate (Within 1 month)</option>
+                  <option value="1-3 months">1-3 months</option>
+                  <option value="3-6 months">3-6 months</option>
+                  <option value="6+ months">6+ months</option>
+                  <option value="Not decided">Not decided yet</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="c-message">Project Requirements *</label>
                 <textarea
-                  id="message"
+                  id="c-message"
                   name="message"
-                  placeholder="Tell us about your project and requirements..."
+                  placeholder="Tell us about your project requirements, goals, and any specific features you need..."
                   value={formData.message}
                   onChange={handleChange}
                   className="form-textarea"
-                  rows={6}
+                  rows={4}
                   required
                 />
               </div>
+
+              {/* Error Message */}
+              {formStatus === 'error' && (
+                <div className="form-error">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                  <span>{errorMessage}</span>
+                </div>
+              )}
 
               <button 
                 type="submit" 

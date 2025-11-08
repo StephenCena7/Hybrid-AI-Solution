@@ -1,3 +1,5 @@
+'use client'
+import { useState } from 'react'
 import Navigation from './components/layout/Navigation'
 import Hero from './components/sections/Hero'
 import AboutSection from './components/sections/AboutSection'
@@ -7,11 +9,16 @@ import Benefits from './components/sections/Benefits'
 import ContactSection from './components/sections/ContactSection'
 import CTA from './components/sections/CTA'
 import Footer from './components/layout/Footer'
+import QuotationModal from './components/layout/QuotationModal'
+import FloatingActions from './components/layout/FloatingActions'
+
 
 export default function Home() {
+  const [quotationModalOpen, setQuotationModalOpen] = useState(false)
+
   return (
     <>
-      <Navigation />
+      <Navigation onContactClick={() => setQuotationModalOpen(true)} />
       <Hero />
       <AboutSection />
       <AgenticTimeline />
@@ -19,6 +26,11 @@ export default function Home() {
       <Benefits />
       <ContactSection />
       <CTA />
+      <FloatingActions onQuotationClick={() => setQuotationModalOpen(true)} />
+      <QuotationModal 
+        isOpen={quotationModalOpen} 
+        onClose={() => setQuotationModalOpen(false)} 
+      />
       <Footer />
     </>
   )

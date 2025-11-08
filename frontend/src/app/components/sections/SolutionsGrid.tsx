@@ -42,21 +42,6 @@ const solutions: Solution[] = [
   },
   {
     id: 3,
-    title: 'Retail Solutions',
-    description: 'Omnichannel retail management with inventory sync, multi-store operations, and customer analytics.',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="9" cy="21" r="1"/>
-        <circle cx="20" cy="21" r="1"/>
-        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-        <path d="M6 10h17"/>
-      </svg>
-    ),
-    color: 'green',
-    features: ['Multi-Store', 'Inventory', 'Analytics']
-  },
-  {
-    id: 4,
     title: 'HRMS Platform',
     description: 'From recruitment to retirement — a unified employee experience powered by intelligence.',
     icon: (
@@ -67,6 +52,20 @@ const solutions: Solution[] = [
     ),
     color: 'pink',
     features: ['Recruitment', 'Payroll', 'Performance']
+  },
+  {
+    id: 4,
+    title: 'Retail Solutions',
+    description: 'Omnichannel retail management with inventory sync, multi-store operations, and customer analytics.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="9" cy="21" r="1"/>
+        <circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+      </svg>
+    ),
+    color: 'green',
+    features: ['Multi-Store', 'Inventory', 'Analytics']
   },
   {
     id: 5,
@@ -89,12 +88,25 @@ const solutions: Solution[] = [
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-        <line x1="9" y1="3" x2="9" y2="21"/>
-        <line x1="15" y1="21" x2="15" y2="3"/>
       </svg>
     ),
     color: 'violet',
     features: ['Analytics', 'AI-Insights', 'Dashboards']
+  },
+  {
+    id: 7,
+    title: 'Business Automation',
+    description: 'Streamline workflows and eliminate manual tasks with intelligent automation across all business processes.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v6m0 6v6"/>
+        <path d="m5.64 5.64 4.24 4.24m6.36 0 4.24-4.24"/>
+        <path d="M5.64 18.36 9.88 14.12m8.48 0 4.24 4.24"/>
+      </svg>
+    ),
+    color: 'teal',
+    features: ['Workflow', 'Integration', 'Automation']
   }
 ]
 

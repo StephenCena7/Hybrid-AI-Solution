@@ -1,10 +1,17 @@
 /* ============================================
-   GLOBAL OVERFLOW FIX
+   GLOBAL OVERFLOW FIX - MOST IMPORTANT
    ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+}
 
 html, body {
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
+    margin: 0;
+    padding: 0;
 }
 
 /* ============================================
@@ -23,6 +30,8 @@ html, body {
     overflow: hidden;
     scroll-behavior: smooth;
     width: 100%;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 /* Decorative Elements */
@@ -79,6 +88,8 @@ html, body {
     position: relative;
     z-index: 10;
     width: 100%;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Benefits Card */
@@ -93,9 +104,11 @@ html, body {
     border-radius: 2rem;
     padding: 4rem 3rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     backdrop-filter: blur(20px);
     width: 100%;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .benefits-card::before {
@@ -109,6 +122,7 @@ html, body {
     );
     pointer-events: none;
     animation: shimmerBg 6s ease-in-out infinite;
+    border-radius: 2rem;
 }
 
 @keyframes shimmerBg {
@@ -129,6 +143,7 @@ html, body {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
     animation: shimmer 5s infinite;
+    border-radius: 2rem;
 }
 
 @keyframes shimmer {
@@ -136,24 +151,44 @@ html, body {
     100% { left: 100%; }
 }
 
-/* Header Section */
+/* ============================================
+   HEADER SECTION - FIXED FOR MOBILE
+   ============================================ */
+
 .benefits-header {
     text-align: center;
     margin-bottom: 4rem;
     position: relative;
     z-index: 2;
+    width: 100%;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
 }
 
+/* KEY FIX: Split title and gradient text properly */
 .benefits-title {
     font-size: 3rem;
     font-weight: 800;
     color: white;
     margin-bottom: 1.25rem;
-    line-height: 1.2;
+    line-height: 1.25;
     letter-spacing: -0.5px;
+    width: 100%;
+    margin: 0 auto 1.25rem;
+    padding: 0;
+    box-sizing: border-box;
+    word-spacing: normal;
+    white-space: normal;
 }
 
+/* CRITICAL FIX: Make gradient text its own element */
 .benefits-gradient-text {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
     background: linear-gradient(
         135deg,
         var(--cyan-400),
@@ -165,6 +200,10 @@ html, body {
     background-clip: text;
     background-size: 300% 300%;
     animation: gradientShift 7s ease-in-out infinite;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    box-sizing: border-box;
 }
 
 @keyframes gradientShift {
@@ -183,9 +222,15 @@ html, body {
     margin: 0 auto;
     line-height: 1.7;
     font-weight: 400;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Benefits Grid */
+/* ============================================
+   BENEFITS GRID
+   ============================================ */
+
 .benefits-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -193,9 +238,15 @@ html, body {
     position: relative;
     z-index: 2;
     width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Benefit Item */
+/* ============================================
+   BENEFIT ITEM
+   ============================================ */
+
 .benefit-item {
     position: relative;
     background: rgba(15, 23, 42, 0.6);
@@ -205,6 +256,8 @@ html, body {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     text-align: center;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 .benefit-item::before {
@@ -232,7 +285,10 @@ html, body {
     opacity: 0.3;
 }
 
-/* Icon Wrapper */
+/* ============================================
+   ICON WRAPPER
+   ============================================ */
+
 .benefit-icon-wrapper {
     position: relative;
     width: 5rem;
@@ -314,7 +370,10 @@ html, body {
     opacity: 0.6;
 }
 
-/* Metric Section */
+/* ============================================
+   METRIC SECTION
+   ============================================ */
+
 .benefit-metric-wrapper {
     margin-bottom: 1.75rem;
 }
@@ -361,7 +420,10 @@ html, body {
     box-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
 }
 
-/* Content Section */
+/* ============================================
+   CONTENT SECTION
+   ============================================ */
+
 .benefit-content {
     position: relative;
     z-index: 2;
@@ -393,68 +455,150 @@ html, body {
 }
 
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - SMALL MOBILE (max-width: 480px)
    ============================================ */
 
 @media (max-width: 480px) {
     .benefits-section {
-        padding: 3rem 1rem;
+        padding: 2.5rem 1rem !important;
+        width: 100%;
+        margin: 0;
+        overflow: visible;
     }
 
     .benefits-card {
-        padding: 2rem 1.25rem;
+        padding: 1.75rem 1rem !important;
         border-radius: 1.25rem;
+        width: 100%;
+        margin: 0;
+        overflow: visible;
     }
 
+    .benefits-header {
+        margin-bottom: 2rem;
+        width: 100%;
+        padding: 0;
+    }
+
+    /* CRITICAL MOBILE FIX */
     .benefits-title {
-        font-size: 1.875rem;
-        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        line-height: 1.2;
+        margin-bottom: 0.75rem;
+        width: 100%;
+        text-align: center;
+        word-spacing: normal;
+    }
+
+    .benefits-gradient-text {
+        font-size: 1.5rem;
+        line-height: 1.2;
+        margin: 0.5rem 0 0 0;
+        width: 100%;
+        display: block;
     }
 
     .benefits-description {
-        font-size: 0.95rem;
-        line-height: 1.6;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        max-width: 100%;
+        width: 100%;
+        margin: 1rem auto 0;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .benefit-item {
+        padding: 1.5rem 1rem;
+    }
+
+    .benefit-icon-wrapper {
+        width: 3.5rem;
+        height: 3.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .benefit-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .benefit-icon svg {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .benefit-metric {
+        font-size: 2.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .benefit-metric-wrapper {
+        margin-bottom: 1.25rem;
+    }
+
+    .benefit-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .benefit-desc {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+
+    .benefits-decoration-top,
+    .benefits-decoration-bottom {
+        width: 12rem;
+        height: 12rem;
+        opacity: 0.5;
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - TABLET (481px - 768px)
+   ============================================ */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .benefits-section {
+        padding: 3.5rem 1.25rem;
+    }
+
+    .benefits-card {
+        padding: 2.5rem 1.75rem;
     }
 
     .benefits-header {
         margin-bottom: 2.5rem;
     }
 
+    .benefits-title {
+        font-size: 1.75rem;
+        line-height: 1.25;
+        margin-bottom: 1rem;
+    }
+
+    .benefits-gradient-text {
+        font-size: 1.75rem;
+        line-height: 1.25;
+        margin-top: 0.5rem;
+    }
+
+    .benefits-description {
+        font-size: 0.95rem;
+        max-width: 100%;
+    }
+
     .benefits-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 1.75rem;
     }
 
-    .benefit-item {
-        padding: 2rem 1.5rem;
-    }
-
-    .benefit-icon-wrapper {
-        width: 4rem;
-        height: 4rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .benefit-icon {
-        width: 4rem;
-        height: 4rem;
-    }
-
-    .benefit-icon svg {
-        width: 2rem;
-        height: 2rem;
-    }
-
     .benefit-metric {
-        font-size: 2.75rem;
-    }
-
-    .benefit-label {
-        font-size: 1rem;
-    }
-
-    .benefit-desc {
-        font-size: 0.875rem;
+        font-size: 2.5rem;
     }
 
     .benefits-decoration-top,
@@ -464,9 +608,13 @@ html, body {
     }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
+/* ============================================
+   RESPONSIVE DESIGN - TABLET (769px - 1024px)
+   ============================================ */
+
+@media (min-width: 769px) and (max-width: 1024px) {
     .benefits-section {
-        padding: 4rem 1.25rem;
+        padding: 4.5rem 1.5rem;
     }
 
     .benefits-card {
@@ -475,10 +623,7 @@ html, body {
 
     .benefits-title {
         font-size: 2.25rem;
-    }
-
-    .benefits-description {
-        font-size: 1rem;
+        line-height: 1.3;
     }
 
     .benefits-grid {
@@ -497,36 +642,22 @@ html, body {
     }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-    .benefits-section {
-        padding: 5rem 1.5rem;
-    }
-
-    .benefits-card {
-        padding: 3.5rem 2.5rem;
-    }
-
-    .benefits-title {
-        font-size: 2.75rem;
-    }
-
-    .benefits-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2.25rem;
-    }
-
-    .benefit-metric {
-        font-size: 3.25rem;
-    }
-}
+/* ============================================
+   RESPONSIVE DESIGN - DESKTOP (1025px+)
+   ============================================ */
 
 @media (min-width: 1025px) {
     .benefits-section {
         padding: 6rem 1.5rem;
     }
 
+    .benefits-card {
+        padding: 4rem 3rem;
+    }
+
     .benefits-title {
-        font-size: 3.25rem;
+        font-size: 3rem;
+        line-height: 1.2;
     }
 
     .benefits-grid {
@@ -534,6 +665,10 @@ html, body {
         gap: 2.5rem;
     }
 }
+
+/* ============================================
+   RESPONSIVE DESIGN - LARGE DESKTOP (1440px+)
+   ============================================ */
 
 @media (min-width: 1440px) {
     .benefits-title {
@@ -546,5 +681,30 @@ html, body {
 
     .benefits-grid {
         gap: 3rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & FOCUS STATES
+   ============================================ */
+
+.benefit-item:focus-visible {
+    outline: 2px solid rgba(6, 182, 212, 0.6);
+    outline-offset: 4px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .benefits-decoration-top,
+    .benefits-decoration-bottom,
+    .benefits-card::before,
+    .benefits-card::after,
+    .benefits-gradient-text,
+    .benefit-metric,
+    .benefit-item,
+    .benefit-icon,
+    .benefit-item:hover .benefit-circle-bg {
+        animation: none !important;
+        transition: none !important;
     }
 }

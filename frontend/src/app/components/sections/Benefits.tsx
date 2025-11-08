@@ -123,7 +123,7 @@ export default function Benefits() {
           {/* Header */}
           <div className="benefits-header">
             <h2 className="benefits-title">
-              Transforming Businesses<br />
+              Transforms Businesses<br />
               <span className="benefits-gradient-text">Across the Globe</span>
             </h2>
             <p className="benefits-description">

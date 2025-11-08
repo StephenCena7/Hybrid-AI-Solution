@@ -150,32 +150,9 @@ export default function Hero() {
         // Trigger transitions when scanline passes each element
         const threshold = 20
 
-        // Badge transition
-        if (Math.abs(scanlineY - badgeTop) < threshold && !badgeTransitioning) {
-          setBadgeTransitioning(true)
-          setTimeout(() => setBadgeTransitioning(false), transitionDuration)
-        }
+        
 
-        // Title transition
-        if (Math.abs(scanlineY - titleTop) < threshold && !titleTransitioning) {
-          setTitleTransitioning(true)
-          setTimeout(() => setTitleTransitioning(false), transitionDuration)
-        }
-
-        // Subtitle transition
-        if (Math.abs(scanlineY - subtitleTop) < threshold && !subtitleTransitioning) {
-          setSubtitleTransitioning(true)
-          setTimeout(() => setSubtitleTransitioning(false), transitionDuration)
-        }
-
-        // Description transition (and change all text after)
-        if (Math.abs(scanlineY - descriptionTop) < threshold && !descriptionTransitioning) {
-          setDescriptionTransitioning(true)
-          setTimeout(() => {
-            setDescriptionTransitioning(false)
-            setCurrentTextIndex((prev) => (prev + 1) % textVariations.length)
-          }, transitionDuration)
-        }
+        
       }
 
       animationFrameId = requestAnimationFrame(animate)
@@ -212,7 +189,6 @@ export default function Hero() {
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
           </svg>
           <span>{currentText.badge}</span>
-          <div className="badge-shine"></div>
         </div>
 
         <div className="hero-title-container">
@@ -252,7 +228,7 @@ export default function Hero() {
             <div className="btn-glow"></div>
           </button>
           <button className="btn-secondary btn-large btn-glass btn-glitch-hover">
-            <span>Watch Demo</span>
+            <span>Book a demo</span>
             <svg viewBox="0 0 24 24" fill="currentColor">
               <polygon points="5 3 19 12 5 21 5 3"/>
             </svg>

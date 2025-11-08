@@ -1,0 +1,411 @@
+/* ============================================
+   QUOTATION MODAL - COMPLETE STYLES
+   ============================================ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 1.5rem;
+    animation: fadeIn 0.3s ease-out;
+    overflow-y: auto;
+}
+
+.modal-content {
+    position: relative;
+    background: linear-gradient(
+        135deg,
+        rgba(6, 182, 212, 0.1),
+        rgba(168, 85, 247, 0.08),
+        rgba(15, 23, 42, 0.5)
+    );
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: 2rem;
+    padding: 3rem;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: rgba(34, 211, 238, 0.2);
+    border-color: var(--cyan-400);
+    transform: rotate(90deg);
+}
+
+.modal-close svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: white;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(34, 211, 238, 0.1);
+}
+
+.modal-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.modal-gradient-text {
+    background: linear-gradient(
+        135deg,
+        var(--cyan-400),
+        var(--purple-400),
+        var(--pink-400)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 300% 300%;
+    animation: gradientShift 7s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.modal-subtitle {
+    font-size: 1rem;
+    color: var(--slate-400);
+    line-height: 1.6;
+}
+
+/* ============================================
+   QUOTATION FORM STYLES
+   ============================================ */
+
+.quotation-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.quotation-form .form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.quotation-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.quotation-form .form-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--slate-300);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.quotation-form .form-group:focus-within label {
+    color: var(--cyan-400);
+}
+
+.quotation-form .form-input,
+.quotation-form .form-select,
+.quotation-form .form-textarea {
+    padding: 1rem 1.25rem;
+    background: rgba(30, 41, 59, 0.7);
+    border: 1.5px solid rgba(34, 211, 238, 0.15);
+    border-radius: 1rem;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+.quotation-form .form-input::placeholder,
+.quotation-form .form-select::placeholder,
+.quotation-form .form-textarea::placeholder {
+    color: rgba(148, 163, 184, 0.6);
+}
+
+.quotation-form .form-input:focus,
+.quotation-form .form-select:focus,
+.quotation-form .form-textarea:focus {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: var(--cyan-400);
+    box-shadow: 
+        0 0 0 4px rgba(34, 211, 238, 0.1),
+        0 8px 25px rgba(34, 211, 238, 0.15);
+    transform: translateY(-2px);
+}
+
+.quotation-form .form-input:hover,
+.quotation-form .form-select:hover,
+.quotation-form .form-textarea:hover {
+    border-color: rgba(34, 211, 238, 0.3);
+}
+
+.quotation-form .form-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2322d3ee' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.quotation-form .form-select option {
+    background: var(--slate-900);
+    color: white;
+    padding: 0.5rem;
+}
+
+.quotation-form .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    max-height: 300px;
+}
+
+/* Form Error */
+.form-error {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.75rem;
+    color: #fca5a5;
+    margin-bottom: 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-error svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: #ef4444;
+}
+
+/* Submit Button */
+.form-submit-btn {
+    padding: 1.25rem 2rem;
+    background: linear-gradient(
+        135deg,
+        var(--cyan-500),
+        var(--purple-500)
+    );
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
+    margin-top: 1.5rem;
+}
+
+.form-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.form-submit-btn:hover::before {
+    left: 100%;
+}
+
+.form-submit-btn:hover:not(:disabled) {
+    background: linear-gradient(
+        135deg,
+        var(--cyan-600),
+        var(--purple-600)
+    );
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(34, 211, 238, 0.4);
+}
+
+.form-submit-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.form-submit-btn.success {
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+    box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
+}
+
+.form-submit-btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.form-submit-btn .spinner {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 2rem 1.5rem;
+        border-radius: 1.5rem;
+        max-height: 85vh;
+    }
+
+    .modal-title {
+        font-size: 2rem;
+    }
+
+    .modal-subtitle {
+        font-size: 0.9375rem;
+    }
+
+    .quotation-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .form-submit-btn {
+        padding: 1rem 1.75rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 1rem;
+    }
+
+    .modal-content {
+        padding: 1.75rem 1.25rem;
+        border-radius: 1.25rem;
+    }
+
+    .modal-title {
+        font-size: 1.75rem;
+    }
+
+    .modal-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .quotation-form .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-submit-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+        margin-top: 1rem;
+    }
+}

@@ -366,6 +366,18 @@ html, body {
 .solution-icon-violet svg {
     color: #8b5cf6;
 }
+.solution-icon-teal {
+    background: linear-gradient(
+        135deg,
+        rgba(20, 184, 166, 0.25),
+        rgba(13, 148, 136, 0.12)
+    );
+    border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.solution-icon-teal svg {
+    color: #14b8a6;
+}
 
 /* Icon Glow Effect */
 .solution-icon-glow {
